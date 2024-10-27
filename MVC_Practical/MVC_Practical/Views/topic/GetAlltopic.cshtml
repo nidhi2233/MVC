@@ -1,0 +1,39 @@
+@model List<topics>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<h1>Topic list</h1>
+<br />
+<h5><a asp-action="AddTopic" class="btn btn-outline-primary">Add New Topic</a></h5>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Topic Id</th>
+            <th>Topic Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var topics in Model)
+        {
+            <tr>
+                <td>@topics.c_topicId</td>
+                <td>@topics.c_topicName</td>
+                <td>
+                    <a asp-action="EditTopic" asp-route-id="@topics.c_topicId" class="btn btn-outline-warning">Edit</a> &nbsp; |
+                    &nbsp;
+                    <form asp-action="DeleteTopic" method="post" asp-route-id="@topics.c_topicId"
+                        style="display:inline;">
+                        <button type="submit" class="btn btn-outline-danger"
+                            onclick="return confirm('Are you sure you want to delete this Topic?');"> Delete
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

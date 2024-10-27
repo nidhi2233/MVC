@@ -1,0 +1,72 @@
+@model MVC_Practical.Models.internDemo
+
+@{
+    ViewData["Title"] = "Add Intern";
+}
+
+@if(TempData["alertMessage"] != null){
+   <script type="text/javascript">
+       alert('@TempData["alertMessage"]');
+       @TempData["alertMessage"] = "";
+    </script>
+}
+
+<div class="container">
+    <h3>Add Interns</h3>
+    <br />
+    <h5><a asp-action="GetAllInterns" class="btn btn-outline-primary">List Of Interns</a></h5>
+    <br />
+    <form asp-action="AddInterns" method="post" enctype="multipart/form-data">
+        
+        <div class="form-group mb-3">
+            <label asp-for="c_internName" class="mb-1"></label>
+            <input type="text" asp-for="c_internName" class="form-control" placeholder="Enter Topic Name">
+            <span asp-validation-for="c_internName" style="color: red;"></span>
+        </div>
+
+        <div class="form-group ">
+            <label asp-for="c_gender" class="mb-1"></label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" asp-for="c_gender" class="form-check-input" value="M">
+            <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline mb-3">
+            <input type="radio" asp-for="c_gender" class="form-check-input" value="F">
+            <label class="form-check-label" for="Female">Female</label>
+            <span asp-validation-for="c_gender" style="color: red;"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <select asp-for="c_topicId" class="form-control">
+                <option value="">Select Topic</option>
+                @foreach (topics topic in ViewBag.Topics)
+                {
+                    <option value="@topic.c_topicId">@topic.c_topicName</option>
+                }
+            </select>
+            <span asp-validation-for="assignTopic!.c_topicName" style="color: red;"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="c_date_Of_presentation" class="mb-1"></label>
+            <input type="date" asp-for="c_date_Of_presentation" class="form-control" placeholder="Enter Topic Name">
+            <span asp-validation-for="c_date_Of_presentation" style="color: red;"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="imagePath" class="mb-1"></label>
+            <input type="file" asp-for="imagePath" class="form-control" placeholder="Enter Topic Name">
+            <span asp-validation-for="imagePath" style="color: red;"></span>
+        </div>
+        
+        <div class="form-check form-check-inline">
+            <input type="checkbox" asp-for="c_status" class="form-check-input">
+            <label class="form-check-label" for="male">Presentation Completed</label>
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-outline-success">Add Interns</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,74 @@
+@model List<ProductClass>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>this is home product page</h1>
+
+    @if (TempData != null)
+    {
+
+        <div class="alert alert-success" role="alert">
+            @TempData["delete"]
+        </div>
+
+        <script>
+            $(document).ready(function(){
+                setTimeout(()=>{
+                    $('.alert').fadeOut(1000);
+                })
+            })
+        </script>
+    }
+
+
+    <table class="table">
+
+        <thead class="thead-dark">
+            <th scope="col">id</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Size</th>
+            <th scope="col">Product Color</th>
+            <th scope="col">Product Qty</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Date</th>
+            <th scope="col">Product Brand</th>
+            <th scope="col">Product Image</th>
+            <th>Action</th>
+        </thead>
+
+
+        @foreach (ProductClass product in Model)
+        {
+
+            <tr>
+                <td>@product.c_sid</td>
+                <td>@product.c_name</td>
+                <td>@product.c_size</td>
+                <td>@product.c_color</td>
+                <td>@product.c_qty</td>
+                <td>@product.c_price</td>
+                <td>@product.c_date</td>
+                <td>@product.brand</td>
+                <td><img src="@product.img" alt="" style="width: 5rem; height: 5rem;"></td>
+                <td><a asp-action="deletedata" asp-route-id="@product.c_sid" class="btn btn-danger">delete</a>|<a asp-action="updatefatch"
+                        asp-route-id="@product.c_sid" class="btn btn-info">Update</a></td>
+            </tr>
+
+        }
+
+
+
+    </table>
+
+    <img src="D:/yash/Mvc/wwwroot/img/img2.jpg" alt="">
+
+</body>
+
+</html>

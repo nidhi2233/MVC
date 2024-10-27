@@ -1,0 +1,69 @@
+@model List<InternClass>
+
+@{
+    ViewData["Title"] = "GetAllInterns";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+<h2>Get All Interns</h2>
+<a asp-action="Insert" asp-asp-controller="interndemo" class="btn btn-success">Add New Intern</a>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Intern Id</th>
+                <th>Intern Name</th>
+                <th>Gender</th>
+                <th>Assigned Topic</th>
+                <th>Date of Presentation</th>
+                <th>Presentation Status</th>
+                <th>Topic Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var intern in Model)
+            {
+                <tr>
+                    <td>@intern.InternId</td>
+                    <td>@intern.InternName</td>
+                    <td>@(intern.Gender == "M" ? "Male" : "Female")</td>
+                    <td>@intern.AssignedTopic?.TopicName</td>
+                    <td>@intern.DateOfPresentation.ToLongDateString()</td>
+                    <td>@(intern.Status ? "presented" : "Not Presented")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(intern.TopicImage))
+                        {
+                            <img alt="Topic Image" src="@Url.Content($"{intern.TopicImage}")" height="100px" width="100px" />
+                            @* <img src="@Url.Content("~/images/" + intern.TopicImage)" alt="Topic Image" style="width:100px; height:auto;" /> *@
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="GetDetail" asp-asp-controller="interndemo" asp-route-id="@intern.InternId" class="btn btn-info">Details</a>
+                        <a asp-action="EditIntern" asp-asp-controller="interndemo" asp-route-id="@intern.InternId" class="btn btn-warning">Edit</a>
+                    <form asp-action="DeleteInterns" asp-route-id="@intern.InternId" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this intern?');">Delete</button>
+                    </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>

@@ -1,0 +1,56 @@
+@model purchesClass
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    
+@if (TempData != null)
+    {
+        <div class="alert alert-success">
+            <strong>@TempData["purches"]</strong> 
+        </div>
+    }
+
+    <table class="table">
+        <thead class="thead-dark">
+            <th scope="col"> Shoes Name</th>
+            <th scope="col"> Shoes Size</th>
+            <th scope="col"> Shoes Color</th>
+            <th scope="col"> Shoes Price</th>
+            <th scope="col"> Shoes Brand</th>
+            <th scope="col">Gender</th>
+            <th scope="col"> Action Qty</th>
+            <th scope="col"> Shoes Image</th>
+            <th scope="col">Action</th>
+        </thead>
+
+        @foreach (var client in ViewBag.datas)
+        {
+            <tr>
+                <td>@client.c_name</td>
+                <td>@client.c_size</td>
+                <td>@client.c_color</td>
+                <td>@client.c_price</td>
+                <td>@client.c_bname</td>
+                <td>@client.c_gender</td>
+                <form asp-action="purches" asp-route-id="@client.c_sid">
+                    <td><input type="number" asp-for="@Model.c_qty" min="1" max="@client.c_qty" value="1"></td>
+                    <td><img src="@client.path" alt="" style="width: 10rem;"></td>
+                    <td><button type="submit" class="btn btn-info">Purches</button></td>
+                </form>
+            </tr>
+
+        }
+
+    </table>
+
+</body>
+
+</html>

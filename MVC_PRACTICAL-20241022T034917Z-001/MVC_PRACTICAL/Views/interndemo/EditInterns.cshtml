@@ -1,0 +1,80 @@
+@model MVC_PRACTICAL.Models.InternClass
+
+@{
+    ViewData["Title"] = "Edit Intern";
+}
+@if(TempData["alertMessage"] != null){
+   <script type="text/javascript">
+       alert('@TempData["alertMessage"]');
+       @TempData["alertMessage"] = "";
+    </script>
+}
+
+<div class="container">
+    <h3>Update Interns</h3>
+    <br />
+    <h5><a asp-action="GetAllInterns" class="btn btn-outline-primary">List Of Interns</a></h5>
+    <br />
+    <form asp-action="EditInterns" method="post" enctype="multipart/form-data">
+        <input hidden asp-for="InternId">
+        <input hidden asp-for="TopicImage">
+        <div class="form-group mb-3">
+            <label asp-for="InternName" class="mb-1"></label>
+            <input type="text" asp-for="InternName" class="form-control" placeholder="Enter Topic Name">
+            <span asp-validation-for="InternName" style="color: red;"></span>
+        </div>
+
+        <div class="form-group ">
+            <label asp-for="Gender" class="mb-1"></label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" asp-for="Gender" class="form-check-input" value="M">
+            <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline mb-3">
+            <input type="radio" asp-for="Gender" class="form-check-input" value="F">
+            <label class="form-check-label" for="Female">Female</label>
+            <span asp-validation-for="Gender" style="color: red;"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <select asp-for="TopicId" class="form-control">
+                <option value="">Select Topic</option>
+                @foreach (var topic in ViewBag.Topics)
+                {
+                    if (Model.TopicId == topic.TopicId)
+                    {
+                        <option value="@topic.TopicId" selected>@topic.TopicName</option>
+                    }
+                    else
+                    {
+                        <option value="@topic.TopicId">@topic.TopicName</option>
+                    }
+
+                }
+            </select>
+            <span asp-validation-for="TopicId" style="color: red;"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="DateOfPresentation" class="mb-1"></label>
+            <input type="date" asp-for="DateOfPresentation" class="form-control" />
+            <span asp-validation-for="DateOfPresentation" style="color: red;"></span>
+        </div>
+        <div class="form-group mb-3">
+            <img alt="#" height="100px" width="100px" src="@Url.Content($"/images/{Model.TopicImage}")">
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="TopicImageFile" class="mb-1"></label>
+            <input type="file" asp-for="TopicImageFile" class="form-control" />
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" asp-for="Status" class="form-check-input">
+            <label class="form-check-label" for="male">Presentation Completed</label>
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-outline-success">Edit Intern</button>
+        </div>
+    </form>
+</div>

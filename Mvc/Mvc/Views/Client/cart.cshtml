@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table class="table">
+
+        <thead class="thead-dark">
+            <th scope="col"> Shoes Name</th>
+            <th scope="col"> Shoes Size</th>
+            <th scope="col">Gender</th>
+            <th scope="col"> Shoes Color</th>
+            <th scope="col"> Shoes Price</th>
+            <th scope="col"> Shoes Brand</th>
+            <th scope="col"> Action Qty</th>
+            <th scope="col"> Shoes Image</th>
+            <th scope="col">total</th>
+            <th scope="col">Action</th>
+        </thead>
+
+        @foreach (CartClass cart in ViewBag.carts)
+        {
+            <tr>
+                <td>@cart.c_name</td>
+                <td>@cart.c_size</td>
+                <td>@cart.c_gender</td>
+                <td>@cart.c_color</td>
+                <td>@cart.c_price</td>
+                <td>@cart.c_bname</td>
+                <td>@cart.c_qty</td>
+                <td><img src="@cart.path" style="width: 7rem;" alt=""></td>
+
+
+                @if (cart.cancel)
+                {
+                    <td>0</td>
+                    <td><button class="btn btn-info">Canceled</button></td>
+                }
+                else
+                {
+                    <td>@cart.total</td>
+                    <td><a asp-action="cancel" asp-route-id="@cart.c_oid" class="btn btn-dark">Cancel</a></td>
+                }
+
+            </tr>
+        }
+    </table>
+    <h3>Grand Total:-
+        @if (TempData != null)
+        {
+            @TempData["grandtotal"]
+        }
+    </h3>
+</body>
+
+</html>

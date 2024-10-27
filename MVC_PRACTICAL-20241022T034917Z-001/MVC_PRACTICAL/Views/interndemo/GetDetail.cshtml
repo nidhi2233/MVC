@@ -1,0 +1,76 @@
+@model MVC_PRACTICAL.Models.InternClass
+@{
+    ViewData["Title"] = "Intern Details";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<h1 class="mb-4">Intern Details</h1>
+
+
+<div class="container">
+    <h4 class="mb-3">Intern Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Intern ID</dt>
+        <dd class="col-sm-9">@Model.InternId</dd>
+
+
+        <dt class="col-sm-3">Intern Name</dt>
+        <dd class="col-sm-9">@Model.InternName</dd>
+
+
+        <dt class="col-sm-3">Gender</dt>
+        <dd class="col-sm-9">@Model.Gender</dd>
+
+
+        <dt class="col-sm-3">Assigned Topic</dt>
+        <dd class="col-sm-9">
+            @if (Model.AssignedTopic != null)
+            {
+                @Model.AssignedTopic.TopicName
+            }
+            else
+            {
+                <span>N/A</span>
+            }
+        </dd>
+
+
+        <dt class="col-sm-3">Date of Presentation</dt>
+        <dd class="col-sm-9">@Model.DateOfPresentation.ToShortDateString()</dd>
+
+
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9">
+            @if (Model.Status)
+            {
+                <span>Presented</span>
+            }
+            else
+            {
+                <span>Not Presented</span>
+            }
+        </dd>
+
+
+        <dt class="col-sm-3">Topic Image</dt>
+        <dd class="col-sm-9">
+            @if (!string.IsNullOrEmpty(Model.TopicImage))
+            {
+                <img src="@Model.TopicImage" alt="Topic Image" class="img-thumbnail" style="max-width:200px;" />
+            }
+            else
+            {
+                <span>No image available</span>
+            }
+        </dd>
+    </dl>
+
+
+    @* <div class="mt-4">
+        <a asp-action="Update" asp-route-id="@Model.InternId" class="btn btn-warning">Edit</a>
+        <a asp-action="GetAll" class="btn btn-secondary">Back to List</a>
+    </div> *@
+</div>

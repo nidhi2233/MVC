@@ -1,0 +1,54 @@
+@model List<internDemo>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if(TempData["alertMessage"] != null){
+   <script type="text/javascript">
+       alert('@TempData["alertMessage"]');
+       @TempData["alertMessage"] = "";
+    </script>
+}
+<h1>Inters list</h1>
+<br/>
+<h5><a asp-action="AddInterns" class="btn btn-outline-primary">Add New Intern</a></h5>  
+<br />
+<table class="table">
+    <thead>
+    <tr>
+        <th>Inter ID</th>
+        <th>Inter Name</th>
+        <th>Gender</th>
+        <th>Assigned Topics</th>
+        <th>Date of Presentation</th>
+        <th>Presentation Status</th>
+        <th>Presentation Image</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach(var interns in Model){
+            <tr>
+                <td>@interns.c_internId</td>                
+                <td>@interns.c_internName</td>                
+                <td>@(interns.c_gender == 'M' ? "Male" : "Female")</td>                
+                <td>@interns.assignTopic?.c_topicName</td>                
+                <td>@interns.c_date_Of_presentation.ToShortDateString()</td>                
+                <td>@interns.c_status</td>
+                <td>@if(!string.IsNullOrEmpty(interns.c_topicImage)){
+                    <img alt="#" height="100px" width="100px" src="@Url.Content($"/images/{interns.c_topicImage}")">
+                    }else{
+                        <span>No Image</span>
+                    }</td>
+                <td>
+                    <a asp-action="EditInterns" asp-route-id ="@interns.c_internId" class="btn btn-outline-warning">Edit</a> &nbsp;  |  &nbsp; 
+                    <form asp-action="DeleteInterns" method="post" asp-route-id ="@interns.c_internId" style="display:inline;">
+                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this intern?');"> Delete
+                    </form>
+                </td>               
+            </tr>
+        }
+    </tbody>
+
+</table>

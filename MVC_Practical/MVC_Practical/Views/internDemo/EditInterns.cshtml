@@ -1,0 +1,80 @@
+@model MVC_Practical.Models.internDemo
+
+@{
+    ViewData["Title"] = "Edit Intern";
+}
+@if(TempData["alertMessage"] != null){
+   <script type="text/javascript">
+       alert('@TempData["alertMessage"]');
+       @TempData["alertMessage"] = "";
+    </script>
+}
+
+<div class="container">
+    <h3>Update Interns</h3>
+    <br />
+    <h5><a asp-action="GetAllInterns" class="btn btn-outline-primary">List Of Interns</a></h5>
+    <br />
+    <form asp-action="EditInterns" method="post" enctype="multipart/form-data">
+        <input hidden asp-for="c_internId">
+        <input hidden asp-for="c_topicImage">
+        <div class="form-group mb-3">
+            <label asp-for="c_internName" class="mb-1"></label>
+            <input type="text" asp-for="c_internName" class="form-control" placeholder="Enter Topic Name">
+            <span asp-validation-for="c_internName" style="color: red;"></span>
+        </div>
+
+        <div class="form-group ">
+            <label asp-for="c_gender" class="mb-1"></label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" asp-for="c_gender" class="form-check-input" value="M">
+            <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline mb-3">
+            <input type="radio" asp-for="c_gender" class="form-check-input" value="F">
+            <label class="form-check-label" for="Female">Female</label>
+            <span asp-validation-for="c_gender" style="color: red;"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <select asp-for="c_topicId" class="form-control">
+                <option value="">Select Topic</option>
+                @foreach (var topic in ViewBag.Topics)
+                {
+                    if (Model.c_topicId == topic.c_topicId)
+                    {
+                        <option value="@topic.c_topicId" selected>@topic.c_topicName</option>
+                    }
+                    else
+                    {
+                        <option value="@topic.c_topicId">@topic.c_topicName</option>
+                    }
+
+                }
+            </select>
+            <span asp-validation-for="c_topicId" style="color: red;"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="c_date_Of_presentation" class="mb-1"></label>
+            <input type="date" asp-for="c_date_Of_presentation" class="form-control" placeholder="Enter Topic Name">
+            <span asp-validation-for="c_date_Of_presentation" style="color: red;"></span>
+        </div>
+        <div class="form-group mb-3">
+            <img alt="#" height="100px" width="100px" src="@Url.Content($"/images/{Model.c_topicImage}")">
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="imagePath" class="mb-1"></label>
+            <input type="file" asp-for="imagePath" class="form-control" placeholder="Enter Topic Name">
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" asp-for="c_status" class="form-check-input">
+            <label class="form-check-label" for="male">Presentation Completed</label>
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-outline-success">Update Interns Record</button>
+        </div>
+    </form>
+</div>

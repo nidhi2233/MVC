@@ -1,0 +1,23 @@
+@model MVC_Practical.Models.topics
+
+@{
+    ViewData["Title"] = "Add Topic";
+}
+
+
+<div class="container">
+    <h1>Add Topic</h1>
+    <br />
+    <h5><a asp-action="GetAllTopic" class="btn btn-outline-primary">Topic List</a></h5>
+    <br />
+    <form asp-action="AddTopic" method="post">
+        <div class="form-group">
+            <label asp-for="c_topicName"></label>
+            <input type="text" asp-for="c_topicName" class="form-control" placeholder="Enter Topic Name">
+            <span asp-validation-for="c_topicName" style="color: red;"></span>
+        </div>
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-outline-success">Add Topic</button>
+        </div>
+    </form>
+</div>

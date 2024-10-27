@@ -1,0 +1,24 @@
+create table brand(
+c_bid serial primary key not null,
+c_bname varchar(50)
+);
+
+
+create table t_shoes(
+c_sid serial primary key not null,
+c_name varchar(50),
+c_size int,
+c_color varchar(50),
+c_qty int,
+c_price decimal(8,2),
+c_date date,
+c_bid int,
+constraint fk_bid foreign key(c_bid)references brand(c_bid)
+)
+
+
+insert into brand(c_bname) values('Nike'),('Puma'),('Bata'),('Campus'),('Mochi')
+
+insert into t_shoes(c_name,c_size,c_color,c_qty,c_price,c_date,c_img,c_bid)values('Nike Runing',45,'Blue,Red',10,6000,'2024-02-02','imge/yash',1)
+
+select s.c_sid,s.c_name,s.c_size,s.c_color,s.c_qty,s.c_price,s.c_date,s.c_img,s.c_bid,b.c_bname from t_shoes as s join brand as b on b.c_bid=s.c_bid;
